@@ -1,0 +1,170 @@
+{
+    "constants": {
+        "periodicity": {
+            "day": "day",
+            "month": "month"
+        },
+        "rates": {
+            "taxes": 0.14,
+            "fga": 0.025,
+            "commercial": 0.8
+        },
+        "amounts": {
+            "accessories": 3000,
+            "brownCard": 300
+        }
+    },
+    "monthlyRates": {
+        "1": 8.75,
+        "2": 17.50,
+        "3": 26.25,
+        "4": 35.00,
+        "5": 43.75,
+        "6": 52.50,
+        "7": 61.25,
+        "8": 70.00,
+        "9": 78.75,
+        "10": 87.50,
+        "11": 96.25,
+        "12": 100.00
+    },
+    "coverages": {
+        "civil_liability": {
+            "isRequired": true,
+            "isMandatory": true
+        },
+        "damage": {
+            "isMandatory": true,
+            "rate":{
+                "1": 2.60,
+                "2": 5.20,
+                "3": 5.20
+            }
+        },
+        "collision": {
+            "isMandatory": true,
+            "rate": {
+                "1": 1.65,
+                "2": 2.55,
+                "3": 2.60
+            }           
+        },
+        "capped_damage": {
+            "isMandatory": true,
+            "rate": 4.20,
+            "min_premium": 100000            
+        },
+        "theft": {
+            "isMandatory": true,
+            "rate": 0.14
+        },
+        "fire": {
+            "isMandatory": true,
+            "rate": 0.15
+        },
+        "glass_breakage": {
+            "isMandatory": false
+        },
+        "advance_on_recourse": {
+            "isMandatory": false,
+            "insured_capital": [500000, 1000000, 2000000],
+            "rate": 2.75            
+        },
+        "passengers": {
+            "isMandatory": false
+        },
+        "defense_and_recourse": {
+            "isMandatory": false,
+            "amount": {
+                "1": 3000,
+                "2": 4000,
+                "3": 4000,
+                "4": 4000,
+                "5": 5000
+            }           
+        },
+        "roadside_assistance": {
+            "isMandatory": null
+        }
+    },
+    "baseRates": {
+        "1": [
+            { "min": 0, "max": 2, "value": 37601 },
+            { "min": 3, "max": 6, "value": 45181 },
+            { "min": 7, "max": 10, "value": 51078 },
+            { "min": 11, "max": 14, "value": 65677 },
+            { "min": 15, "max": 23, "value": 86456 },
+            { "min": 24, "max": null, "value": 104143 }
+        ],
+        "2": {
+            "tourism": [
+                { "min": 0, "max": 2, "value": 56958 },
+                { "min": 3, "max": 6, "value": 67644 },
+                { "min": 7, "max": 10, "value": 78974 },
+                { "min": 11, "max": 14, "value": 113944 },
+                { "min": 15, "max": 23, "value": 146969 },
+                { "min": 24, "max": null, "value": 174491 }
+            ],
+            "under3.5": [
+                { "min": 0, "max": 2, "value": 88759 },
+                { "min": 3, "max": 6, "value": 101048 },
+                { "min": 7, "max": 10, "value": 127880 },
+                { "min": 11, "max": 14, "value": 168085 },
+                { "min": 15, "max": 23, "value": 206063 },
+                { "min": 24, "max": null, "value": 237710 }
+            ],
+            "over3.5": [
+                { "min": 0, "max": 2, "value": 91294 },
+                { "min": 3, "max": 6, "value": 103580 },
+                { "min": 7, "max": 10, "value": 130415 },
+                { "min": 11, "max": 14, "value": 170617 },
+                { "min": 15, "max": 23, "value": 208597 },
+                { "min": 24, "max": null, "value": 240245 }
+            ]
+        },
+        "3": {
+            "under3.5": [
+                { "min": 0, "max": 2, "value": 115559 },
+                { "min": 3, "max": 6, "value": 133056 },
+                { "min": 7, "max": 10, "value": 165601 },
+                { "min": 11, "max": 14, "value": 222270 },
+                { "min": 15, "max": 23, "value": 283130 },
+                { "min": 24, "max": null, "value": 328255 }
+            ],
+            "over3.5": [
+                { "min": 0, "max": 2, "value": 117937 },
+                { "min": 3, "max": 6, "value": 135437 },
+                { "min": 7, "max": 10, "value": 167982 },
+                { "min": 11, "max": 14, "value": 224650 },
+                { "min": 15, "max": 23, "value": 285510 },
+                { "min": 24, "max": null, "value": 331336 }
+            ]            
+        },
+        "4": {
+            "under9_seats": [
+                { "min": 0, "max": 2, "value": 84736 },
+                { "min": 3, "max": 6, "value": 100565 },
+                { "min": 7, "max": 10, "value": 117587 },
+                { "min": 11, "max": 14, "value": 167760 },
+                { "min": 15, "max": 23, "value": 224110 },
+                { "min": 24, "max": null, "value": 261832 }
+            ],
+            "over9_seats": [
+                { "min": 0, "max": 2, "value": 84736 },
+                { "min": 3, "max": 6, "value": 100565 },
+                { "min": 7, "max": 10, "value": 117587 },
+                { "min": 11, "max": 14, "value": 167760 },
+                { "min": 15, "max": 23, "value": 224110 },
+                { "min": 24, "max": null, "value": 261832 }
+            ]            
+        },
+        "5": {
+            "mopeds": 18780,
+            "scooters_under_125": 29448,
+            "scooters_over_125": 34021,
+            "side_cars": 40880
+        }
+    }
+}
+
+  

@@ -1,0 +1,102 @@
+{
+    "version": "1.0.0",
+    "language": "fr",
+    "currency": "XOF",
+    "categories": {
+        "TOURISM": {
+            "code": "TOU",
+            "multiplier": 1.0,
+            "description": "Véhicule touristique"
+        },
+        "COMMERCIAL": {
+            "code": "COM", 
+            "multiplier": 1.1,
+            "description": "Véhicule commercial"
+        },
+        "PUBLIC_TRANSPORT_GOODS": {
+            "code": "TRG",
+            "multiplier": 1.2,
+            "description": "Transport public de marchandises"
+        },
+        "PUBLIC_TRANSPORT_PERSONS": {
+            "code": "TRP",
+            "multiplier": 1.15,
+            "description": "Transport public de personnes"
+        },
+        "TWO_THREE_WHEELS": {
+            "code": "MTW",
+            "multiplier": 0.9,
+            "description": "Deux/Trois roues"
+        }
+    },
+    "coverages": {
+        "THIRD_PARTY": {
+            "code": "RC",
+            "description": "Responsabilité Civile",
+            "mandatory": true,
+            "baseRate": 0.05
+        },
+        "GLASS_BREAKAGE": {
+            "code": "BDG",
+            "description": "Bris de glaces",
+            "mandatory": false,
+            "baseRate": 0.01
+        },
+        "THEFT": {
+            "code": "VOL",
+            "description": "Vol",
+            "mandatory": false,
+            "baseRate": 0.03
+        },
+        "FIRE": {
+            "code": "INC",
+            "description": "Incendie",
+            "mandatory": false,
+            "baseRate": 0.02
+        }
+    },
+    "rules": {
+        "vehicleAdjustments": {
+            "fuelTypeRates": {
+                "DIESEL": { 
+                    "multiplier": 1.05,
+                    "description": "Diesel vehicle surcharge"
+                },
+                "ELECTRIC": { 
+                    "multiplier": 0.95,
+                    "description": "Electric vehicle discount"
+                },
+                "GASOLINE": { 
+                    "multiplier": 1.0,
+                    "description": "Standard gasoline vehicle"
+                }
+            },
+            "ageSurchargeMultiplier": 1.2
+        },
+        "fleetDiscounts": {
+            "discountRules": [
+                {
+                    "minFleetSize": 5,
+                    "maxFleetSize": 10,
+                    "discountPerVehicle": 0.01,
+                    "maxDiscount": 0.1
+                },
+                {
+                    "minFleetSize": 11,
+                    "discountPerVehicle": 0.025,
+                    "maxDiscount": 0.3
+                }
+            ]
+        },
+        "noClaimsBonusRules": {
+            "bonusRates": [
+                { "years": 0, "rate": 1.0 },
+                { "years": 1, "rate": 0.95 },
+                { "years": 2, "rate": 0.90 },
+                { "years": 3, "rate": 0.85 },
+                { "years": 4, "rate": 0.80 },
+                { "years": 5, "rate": 0.75 }
+            ]
+        }
+    }
+}

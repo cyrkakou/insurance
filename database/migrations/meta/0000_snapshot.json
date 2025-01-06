@@ -1,0 +1,3800 @@
+{
+  "id": "00000000-0000-0000-0000-000000000000",
+  "prevId": "",
+  "version": "5",
+  "dialect": "mysql",
+  "tables": {
+    "api_keys": {
+      "name": "api_keys",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "int(10)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "userId": {
+          "autoincrement": false,
+          "name": "userId",
+          "type": "varchar(36)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "apiKey": {
+          "autoincrement": false,
+          "name": "apiKey",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "autoincrement": false,
+          "name": "name",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "autoincrement": false,
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "environment": {
+          "default": "'DEVELOPMENT'",
+          "autoincrement": false,
+          "name": "environment",
+          "type": "enum('PRODUCTION','SANDBOX','DEVELOPMENT')",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "expiresAt": {
+          "autoincrement": false,
+          "name": "expiresAt",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lastUsedAt": {
+          "autoincrement": false,
+          "name": "lastUsedAt",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "rateLimit": {
+          "default": 100,
+          "autoincrement": false,
+          "name": "rateLimit",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "isActive": {
+          "default": 1,
+          "autoincrement": false,
+          "name": "isActive",
+          "type": "tinyint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "permissions": {
+          "autoincrement": false,
+          "name": "permissions",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "metadata": {
+          "autoincrement": false,
+          "name": "metadata",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "createdAt": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "createdAt",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updatedAt": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "updatedAt",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {
+        "idx_api_key": {
+          "name": "idx_api_key",
+          "columns": [
+            "apiKey"
+          ],
+          "isUnique": false
+        },
+        "idx_user": {
+          "name": "idx_user",
+          "columns": [
+            "userId"
+          ],
+          "isUnique": false
+        },
+        "idx_active_expiry": {
+          "name": "idx_active_expiry",
+          "columns": [
+            "isActive",
+            "expiresAt"
+          ],
+          "isUnique": false
+        },
+        "idx_api_keys_last_used": {
+          "name": "idx_api_keys_last_used",
+          "columns": [
+            "lastUsedAt"
+          ],
+          "isUnique": false
+        },
+        "idx_api_keys_environment": {
+          "name": "idx_api_keys_environment",
+          "columns": [
+            "environment"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "apiKey": {
+          "name": "apiKey",
+          "columns": [
+            "apiKey"
+          ]
+        }
+      }
+    },
+    "api_logs": {
+      "name": "api_logs",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user_id": {
+          "autoincrement": false,
+          "name": "user_id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "endpoint": {
+          "autoincrement": false,
+          "name": "endpoint",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "method": {
+          "autoincrement": false,
+          "name": "method",
+          "type": "varchar(10)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "request_headers": {
+          "autoincrement": false,
+          "name": "request_headers",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "request_body": {
+          "autoincrement": false,
+          "name": "request_body",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "response_code": {
+          "autoincrement": false,
+          "name": "response_code",
+          "type": "int(3)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "response_body": {
+          "autoincrement": false,
+          "name": "response_body",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ip_address": {
+          "autoincrement": false,
+          "name": "ip_address",
+          "type": "varchar(45)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user_agent": {
+          "autoincrement": false,
+          "name": "user_agent",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "duration": {
+          "autoincrement": false,
+          "name": "duration",
+          "type": "float",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "created_at",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {
+        "idx_user": {
+          "name": "idx_user",
+          "columns": [
+            "user_id"
+          ],
+          "isUnique": false
+        },
+        "idx_endpoint": {
+          "name": "idx_endpoint",
+          "columns": [
+            "endpoint"
+          ],
+          "isUnique": false
+        },
+        "idx_created_at": {
+          "name": "idx_created_at",
+          "columns": [
+            "created_at"
+          ],
+          "isUnique": false
+        },
+        "idx_response_code": {
+          "name": "idx_response_code",
+          "columns": [
+            "response_code"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "uniqueConstraints": {}
+    },
+    "customers": {
+      "name": "customers",
+      "columns": {
+        "id": {
+          "autoincrement": false,
+          "name": "id",
+          "type": "varchar(36)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "customerCode": {
+          "autoincrement": false,
+          "name": "customerCode",
+          "type": "varchar(10)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "lastName": {
+          "autoincrement": false,
+          "name": "lastName",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "firstName": {
+          "autoincrement": false,
+          "name": "firstName",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "idNumber": {
+          "autoincrement": false,
+          "name": "idNumber",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "phoneNumber": {
+          "autoincrement": false,
+          "name": "phoneNumber",
+          "type": "varchar(15)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "autoincrement": false,
+          "name": "email",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "address": {
+          "autoincrement": false,
+          "name": "address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "countryCode": {
+          "autoincrement": false,
+          "name": "countryCode",
+          "type": "varchar(2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "birthDate": {
+          "autoincrement": false,
+          "name": "birthDate",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "createdAt",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updatedAt": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "updatedAt",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {
+        "idx_customer_code": {
+          "name": "idx_customer_code",
+          "columns": [
+            "customerCode"
+          ],
+          "isUnique": false
+        },
+        "idx_id_number": {
+          "name": "idx_id_number",
+          "columns": [
+            "idNumber"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "customerCode": {
+          "name": "customerCode",
+          "columns": [
+            "customerCode"
+          ]
+        },
+        "idNumber": {
+          "name": "idNumber",
+          "columns": [
+            "idNumber"
+          ]
+        }
+      }
+    },
+    "engine_calculation_components": {
+      "name": "engine_calculation_components",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "code": {
+          "autoincrement": false,
+          "name": "code",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "autoincrement": false,
+          "name": "name",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "component_type": {
+          "autoincrement": false,
+          "name": "component_type",
+          "type": "enum('base','multiplier','addition','subtraction','percentage')",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "priority": {
+          "default": 0,
+          "autoincrement": false,
+          "name": "priority",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_active": {
+          "default": 1,
+          "autoincrement": false,
+          "name": "is_active",
+          "type": "tinyint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "code": {
+          "name": "code",
+          "columns": [
+            "code"
+          ]
+        }
+      }
+    },
+    "engine_calculation_formulas": {
+      "name": "engine_calculation_formulas",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "code": {
+          "autoincrement": false,
+          "name": "code",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "autoincrement": false,
+          "name": "name",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "autoincrement": false,
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_active": {
+          "default": 1,
+          "autoincrement": false,
+          "name": "is_active",
+          "type": "tinyint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "code": {
+          "name": "code",
+          "columns": [
+            "code"
+          ]
+        }
+      }
+    },
+    "engine_component_conditions": {
+      "name": "engine_component_conditions",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "component_id": {
+          "autoincrement": false,
+          "name": "component_id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ref_condition_id": {
+          "autoincrement": false,
+          "name": "ref_condition_id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "variable_id": {
+          "autoincrement": false,
+          "name": "variable_id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "value_start": {
+          "autoincrement": false,
+          "name": "value_start",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "value_end": {
+          "autoincrement": false,
+          "name": "value_end",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {}
+    },
+    "engine_component_values": {
+      "name": "engine_component_values",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "component_id": {
+          "autoincrement": false,
+          "name": "component_id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "category_id": {
+          "autoincrement": false,
+          "name": "category_id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "value_type": {
+          "autoincrement": false,
+          "name": "value_type",
+          "type": "enum('fixed','percentage','multiplier')",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "value": {
+          "autoincrement": false,
+          "name": "value",
+          "type": "decimal(10,4)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "min_value": {
+          "autoincrement": false,
+          "name": "min_value",
+          "type": "decimal(15,2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "max_value": {
+          "autoincrement": false,
+          "name": "max_value",
+          "type": "decimal(15,2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {}
+    },
+    "engine_formula_components": {
+      "name": "engine_formula_components",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "formula_id": {
+          "autoincrement": false,
+          "name": "formula_id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "component_id": {
+          "autoincrement": false,
+          "name": "component_id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "execution_order": {
+          "autoincrement": false,
+          "name": "execution_order",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "is_optional": {
+          "default": 0,
+          "autoincrement": false,
+          "name": "is_optional",
+          "type": "tinyint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {}
+    },
+    "engine_ref_conditions": {
+      "name": "engine_ref_conditions",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "code": {
+          "autoincrement": false,
+          "name": "code",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "autoincrement": false,
+          "name": "name",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "operator": {
+          "autoincrement": false,
+          "name": "operator",
+          "type": "enum('equals','not_equals','greater','less','between','in','not_in')",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "autoincrement": false,
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "code": {
+          "name": "code",
+          "columns": [
+            "code"
+          ]
+        }
+      }
+    },
+    "engine_ref_operation_types": {
+      "name": "engine_ref_operation_types",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "code": {
+          "autoincrement": false,
+          "name": "code",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "autoincrement": false,
+          "name": "name",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "autoincrement": false,
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "code": {
+          "name": "code",
+          "columns": [
+            "code"
+          ]
+        }
+      }
+    },
+    "engine_ref_variables": {
+      "name": "engine_ref_variables",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "code": {
+          "autoincrement": false,
+          "name": "code",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "autoincrement": false,
+          "name": "name",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "data_type": {
+          "autoincrement": false,
+          "name": "data_type",
+          "type": "enum('numeric','boolean','string','date')",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "autoincrement": false,
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "code": {
+          "name": "code",
+          "columns": [
+            "code"
+          ]
+        }
+      }
+    },
+    "insurance_base_rates": {
+      "name": "insurance_base_rates",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "int(11) unsigned",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "category": {
+          "autoincrement": false,
+          "name": "category",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "sub_category": {
+          "autoincrement": false,
+          "name": "sub_category",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fiscal_power": {
+          "autoincrement": false,
+          "name": "fiscal_power",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "rate": {
+          "autoincrement": false,
+          "name": "rate",
+          "type": "decimal(10,2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {
+        "category_sub_category_fiscal_power": {
+          "name": "category_sub_category_fiscal_power",
+          "columns": [
+            "category",
+            "sub_category",
+            "fiscal_power"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "uniqueConstraints": {}
+    },
+    "insurance_categories": {
+      "name": "insurance_categories",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "code": {
+          "autoincrement": false,
+          "name": "code",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "autoincrement": false,
+          "name": "name",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "autoincrement": false,
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ref_category_id": {
+          "autoincrement": false,
+          "name": "ref_category_id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "power_category": {
+          "autoincrement": false,
+          "name": "power_category",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "max_weight": {
+          "autoincrement": false,
+          "name": "max_weight",
+          "type": "decimal(10,2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "max_seats": {
+          "autoincrement": false,
+          "name": "max_seats",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_active": {
+          "default": 1,
+          "autoincrement": false,
+          "name": "is_active",
+          "type": "tinyint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "onUpdate": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {
+        "idx_code": {
+          "name": "idx_code",
+          "columns": [
+            "code"
+          ],
+          "isUnique": false
+        },
+        "idx_category": {
+          "name": "idx_category",
+          "columns": [
+            "ref_category_id"
+          ],
+          "isUnique": false
+        },
+        "idx_active": {
+          "name": "idx_active",
+          "columns": [
+            "is_active"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "insurance_categories_ibfk_1": {
+          "name": "insurance_categories_ibfk_1",
+          "tableFrom": "insurance_categories",
+          "tableTo": "ref_categories",
+          "columnsFrom": [
+            "ref_category_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "restrict"
+        }
+      },
+      "uniqueConstraints": {
+        "code": {
+          "name": "code",
+          "columns": [
+            "code"
+          ]
+        }
+      }
+    },
+    "insurance_certificate": {
+      "name": "insurance_certificate",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "bigint(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "certificate_number": {
+          "autoincrement": false,
+          "name": "certificate_number",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "registration_number": {
+          "autoincrement": false,
+          "name": "registration_number",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "chassis_number": {
+          "autoincrement": false,
+          "name": "chassis_number",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "policy_number": {
+          "autoincrement": false,
+          "name": "policy_number",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {
+        "UK_CERTIFICATE": {
+          "name": "UK_CERTIFICATE",
+          "columns": [
+            "certificate_number"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "UK_CERTIFIATE_CHECK": {
+          "name": "UK_CERTIFIATE_CHECK",
+          "columns": [
+            "certificate_number",
+            "registration_number",
+            "chassis_number",
+            "policy_number"
+          ]
+        }
+      }
+    },
+    "insurance_coverages": {
+      "name": "insurance_coverages",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "bigint(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "coverage_code": {
+          "autoincrement": false,
+          "name": "coverage_code",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "coverage_name": {
+          "autoincrement": false,
+          "name": "coverage_name",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "autoincrement": false,
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "options": {
+          "autoincrement": false,
+          "name": "options",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "rules": {
+          "autoincrement": false,
+          "name": "rules",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_active": {
+          "default": 1,
+          "autoincrement": false,
+          "name": "is_active",
+          "type": "tinyint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "onUpdate": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {
+        "idx_coverage_code": {
+          "name": "idx_coverage_code",
+          "columns": [
+            "coverage_code"
+          ],
+          "isUnique": false
+        },
+        "idx_active": {
+          "name": "idx_active",
+          "columns": [
+            "is_active"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "coverage_code": {
+          "name": "coverage_code",
+          "columns": [
+            "coverage_code"
+          ]
+        }
+      }
+    },
+    "insurance_packs": {
+      "name": "insurance_packs",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "bigint(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "pack_code": {
+          "autoincrement": false,
+          "name": "pack_code",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "pack_name": {
+          "autoincrement": false,
+          "name": "pack_name",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "pack_description": {
+          "autoincrement": false,
+          "name": "pack_description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "options": {
+          "autoincrement": false,
+          "name": "options",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "configuration": {
+          "autoincrement": false,
+          "name": "configuration",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_active": {
+          "default": 1,
+          "autoincrement": false,
+          "name": "is_active",
+          "type": "tinyint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "onUpdate": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {
+        "idx_pack_code": {
+          "name": "idx_pack_code",
+          "columns": [
+            "pack_code"
+          ],
+          "isUnique": false
+        },
+        "idx_active": {
+          "name": "idx_active",
+          "columns": [
+            "is_active"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "pack_code": {
+          "name": "pack_code",
+          "columns": [
+            "pack_code"
+          ]
+        }
+      }
+    },
+    "insurance_pack_categories": {
+      "name": "insurance_pack_categories",
+      "columns": {
+        "pack_id": {
+          "autoincrement": false,
+          "name": "pack_id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "category_id": {
+          "autoincrement": false,
+          "name": "category_id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {}
+    },
+    "insurance_pack_coverages": {
+      "name": "insurance_pack_coverages",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "bigint(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "pack_id": {
+          "autoincrement": false,
+          "name": "pack_id",
+          "type": "bigint(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "coverage_id": {
+          "autoincrement": false,
+          "name": "coverage_id",
+          "type": "bigint(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "is_main_coverage": {
+          "default": 0,
+          "autoincrement": false,
+          "name": "is_main_coverage",
+          "type": "tinyint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "options": {
+          "autoincrement": false,
+          "name": "options",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {
+        "coverage_id": {
+          "name": "coverage_id",
+          "columns": [
+            "coverage_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "insurance_pack_coverages_ibfk_1": {
+          "name": "insurance_pack_coverages_ibfk_1",
+          "tableFrom": "insurance_pack_coverages",
+          "tableTo": "insurance_packs",
+          "columnsFrom": [
+            "pack_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "restrict"
+        },
+        "insurance_pack_coverages_ibfk_2": {
+          "name": "insurance_pack_coverages_ibfk_2",
+          "tableFrom": "insurance_pack_coverages",
+          "tableTo": "insurance_coverages",
+          "columnsFrom": [
+            "coverage_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "restrict"
+        }
+      },
+      "uniqueConstraints": {
+        "uk_pack_coverage": {
+          "name": "uk_pack_coverage",
+          "columns": [
+            "pack_id",
+            "coverage_id"
+          ]
+        }
+      }
+    },
+    "insurance_policies": {
+      "name": "insurance_policies",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "reference_number": {
+          "autoincrement": false,
+          "name": "reference_number",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {}
+    },
+    "insurance_rules": {
+      "name": "insurance_rules",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "int(11) unsigned",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "autoincrement": false,
+          "name": "name",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "autoincrement": false,
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "type": {
+          "autoincrement": false,
+          "name": "type",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "category": {
+          "autoincrement": false,
+          "name": "category",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "condition_expression": {
+          "autoincrement": false,
+          "name": "condition_expression",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "parameters": {
+          "autoincrement": false,
+          "name": "parameters",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "priority": {
+          "default": 0,
+          "autoincrement": false,
+          "name": "priority",
+          "type": "int(3)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "default": "'active'",
+          "autoincrement": false,
+          "name": "status",
+          "type": "enum('active','inactive')",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "onUpdate": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {
+        "type_category_status": {
+          "name": "type_category_status",
+          "columns": [
+            "type",
+            "category",
+            "status"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "uniqueConstraints": {}
+    },
+    "insurance_simulations": {
+      "name": "insurance_simulations",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "bigint(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "pack_id": {
+          "autoincrement": false,
+          "name": "pack_id",
+          "type": "bigint(20)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "reference_number": {
+          "autoincrement": false,
+          "name": "reference_number",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "simulation_date": {
+          "autoincrement": false,
+          "name": "simulation_date",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "default": "'draft'",
+          "autoincrement": false,
+          "name": "status",
+          "type": "enum('draft','completed','expired')",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "client_type": {
+          "autoincrement": false,
+          "name": "client_type",
+          "type": "enum('individual','company')",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "client_name": {
+          "autoincrement": false,
+          "name": "client_name",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "client_email": {
+          "autoincrement": false,
+          "name": "client_email",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "client_phone": {
+          "autoincrement": false,
+          "name": "client_phone",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "validity_period": {
+          "default": 7,
+          "autoincrement": false,
+          "name": "validity_period",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "onUpdate": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {
+        "idx_reference": {
+          "name": "idx_reference",
+          "columns": [
+            "reference_number"
+          ],
+          "isUnique": false
+        },
+        "idx_client": {
+          "name": "idx_client",
+          "columns": [
+            "client_type",
+            "client_name"
+          ],
+          "isUnique": false
+        },
+        "idx_date": {
+          "name": "idx_date",
+          "columns": [
+            "simulation_date"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "reference_number": {
+          "name": "reference_number",
+          "columns": [
+            "reference_number"
+          ]
+        }
+      }
+    },
+    "insurance_simulation_coverages": {
+      "name": "insurance_simulation_coverages",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "bigint(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "simulation_id": {
+          "autoincrement": false,
+          "name": "simulation_id",
+          "type": "bigint(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "coverage_type": {
+          "autoincrement": false,
+          "name": "coverage_type",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "is_main_coverage": {
+          "default": 1,
+          "autoincrement": false,
+          "name": "is_main_coverage",
+          "type": "tinyint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "options": {
+          "autoincrement": false,
+          "name": "options",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "premium_amount": {
+          "autoincrement": false,
+          "name": "premium_amount",
+          "type": "decimal(15,2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {
+        "idx_simulation_coverage": {
+          "name": "idx_simulation_coverage",
+          "columns": [
+            "simulation_id",
+            "coverage_type"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "insurance_simulation_coverages_ibfk_1": {
+          "name": "insurance_simulation_coverages_ibfk_1",
+          "tableFrom": "insurance_simulation_coverages",
+          "tableTo": "insurance_simulations",
+          "columnsFrom": [
+            "simulation_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "restrict"
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "insurance_simulation_discounts": {
+      "name": "insurance_simulation_discounts",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "bigint(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "simulation_id": {
+          "autoincrement": false,
+          "name": "simulation_id",
+          "type": "bigint(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "discount_type": {
+          "autoincrement": false,
+          "name": "discount_type",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "discount_rate": {
+          "autoincrement": false,
+          "name": "discount_rate",
+          "type": "decimal(5,2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "discount_amount": {
+          "autoincrement": false,
+          "name": "discount_amount",
+          "type": "decimal(15,2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {
+        "idx_simulation": {
+          "name": "idx_simulation",
+          "columns": [
+            "simulation_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "insurance_simulation_discounts_ibfk_1": {
+          "name": "insurance_simulation_discounts_ibfk_1",
+          "tableFrom": "insurance_simulation_discounts",
+          "tableTo": "insurance_simulations",
+          "columnsFrom": [
+            "simulation_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "restrict"
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "insurance_simulation_history": {
+      "name": "insurance_simulation_history",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "bigint(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "simulation_id": {
+          "autoincrement": false,
+          "name": "simulation_id",
+          "type": "bigint(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "action": {
+          "autoincrement": false,
+          "name": "action",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "action_date": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "action_date",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "action_by": {
+          "autoincrement": false,
+          "name": "action_by",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "details": {
+          "autoincrement": false,
+          "name": "details",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {
+        "idx_simulation": {
+          "name": "idx_simulation",
+          "columns": [
+            "simulation_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "insurance_simulation_history_ibfk_1": {
+          "name": "insurance_simulation_history_ibfk_1",
+          "tableFrom": "insurance_simulation_history",
+          "tableTo": "insurance_simulations",
+          "columnsFrom": [
+            "simulation_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "restrict"
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "insurance_simulation_results": {
+      "name": "insurance_simulation_results",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "bigint(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "simulation_id": {
+          "autoincrement": false,
+          "name": "simulation_id",
+          "type": "bigint(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "base_premium": {
+          "autoincrement": false,
+          "name": "base_premium",
+          "type": "decimal(15,2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "net_premium": {
+          "autoincrement": false,
+          "name": "net_premium",
+          "type": "decimal(15,2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "taxes": {
+          "autoincrement": false,
+          "name": "taxes",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "accessories": {
+          "autoincrement": false,
+          "name": "accessories",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "fixed_costs": {
+          "autoincrement": false,
+          "name": "fixed_costs",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "total_amount": {
+          "autoincrement": false,
+          "name": "total_amount",
+          "type": "decimal(15,2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "prorated_amount": {
+          "autoincrement": false,
+          "name": "prorated_amount",
+          "type": "decimal(15,2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "coverage_period": {
+          "autoincrement": false,
+          "name": "coverage_period",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "period_type": {
+          "autoincrement": false,
+          "name": "period_type",
+          "type": "enum('months','days')",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "calculation_details": {
+          "autoincrement": false,
+          "name": "calculation_details",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {},
+      "foreignKeys": {
+        "insurance_simulation_results_ibfk_1": {
+          "name": "insurance_simulation_results_ibfk_1",
+          "tableFrom": "insurance_simulation_results",
+          "tableTo": "insurance_simulations",
+          "columnsFrom": [
+            "simulation_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "restrict"
+        }
+      },
+      "uniqueConstraints": {
+        "uk_simulation": {
+          "name": "uk_simulation",
+          "columns": [
+            "simulation_id"
+          ]
+        }
+      }
+    },
+    "insurance_simulation_vehicles": {
+      "name": "insurance_simulation_vehicles",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "bigint(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "simulation_id": {
+          "autoincrement": false,
+          "name": "simulation_id",
+          "type": "bigint(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "category": {
+          "autoincrement": false,
+          "name": "category",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "registration_number": {
+          "autoincrement": false,
+          "name": "registration_number",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "chassis_number": {
+          "autoincrement": false,
+          "name": "chassis_number",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "horse_power": {
+          "autoincrement": false,
+          "name": "horse_power",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "color": {
+          "autoincrement": false,
+          "name": "color",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "body_type": {
+          "autoincrement": false,
+          "name": "body_type",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "circulation_zone": {
+          "autoincrement": false,
+          "name": "circulation_zone",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fuel_type": {
+          "autoincrement": false,
+          "name": "fuel_type",
+          "type": "enum('essence','diesel')",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "original_value": {
+          "autoincrement": false,
+          "name": "original_value",
+          "type": "decimal(15,2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "current_value": {
+          "autoincrement": false,
+          "name": "current_value",
+          "type": "decimal(15,2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "vehicle_age": {
+          "autoincrement": false,
+          "name": "vehicle_age",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "seats_number": {
+          "autoincrement": false,
+          "name": "seats_number",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "make": {
+          "autoincrement": false,
+          "name": "make",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "model": {
+          "autoincrement": false,
+          "name": "model",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "first_use_date": {
+          "autoincrement": false,
+          "name": "first_use_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "first_registration_date": {
+          "autoincrement": false,
+          "name": "first_registration_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "empty_weight": {
+          "autoincrement": false,
+          "name": "empty_weight",
+          "type": "double",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "max_weight": {
+          "autoincrement": false,
+          "name": "max_weight",
+          "type": "double",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "payload": {
+          "autoincrement": false,
+          "name": "payload",
+          "type": "double",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "usage": {
+          "autoincrement": false,
+          "name": "usage",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "has_trailer": {
+          "default": 0,
+          "autoincrement": false,
+          "name": "has_trailer",
+          "type": "int(1)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {
+        "idx_simulation": {
+          "name": "idx_simulation",
+          "columns": [
+            "simulation_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "insurance_simulation_vehicles_ibfk_1": {
+          "name": "insurance_simulation_vehicles_ibfk_1",
+          "tableFrom": "insurance_simulation_vehicles",
+          "tableTo": "insurance_simulations",
+          "columnsFrom": [
+            "simulation_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "restrict"
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "migrations": {
+      "name": "migrations",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "bigint(20) unsigned",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "version": {
+          "autoincrement": false,
+          "name": "version",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "class": {
+          "autoincrement": false,
+          "name": "class",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "group": {
+          "autoincrement": false,
+          "name": "group",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "namespace": {
+          "autoincrement": false,
+          "name": "namespace",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "time": {
+          "autoincrement": false,
+          "name": "time",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "batch": {
+          "autoincrement": false,
+          "name": "batch",
+          "type": "int(11) unsigned",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {}
+    },
+    "param_vehicle_categories": {
+      "name": "param_vehicle_categories",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "code": {
+          "autoincrement": false,
+          "name": "code",
+          "type": "varchar(10)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "autoincrement": false,
+          "name": "description",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "usage_type": {
+          "autoincrement": false,
+          "name": "usage_type",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "isActive": {
+          "default": 1,
+          "autoincrement": false,
+          "name": "isActive",
+          "type": "tinyint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "createdAt",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updatedAt": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "updatedAt",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "UK_CAT_CODE": {
+          "name": "UK_CAT_CODE",
+          "columns": [
+            "code"
+          ]
+        }
+      }
+    },
+    "passenger_surcharges": {
+      "name": "passenger_surcharges",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "int(11) unsigned",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "seats": {
+          "autoincrement": false,
+          "name": "seats",
+          "type": "int(3)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "category": {
+          "autoincrement": false,
+          "name": "category",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "surcharge": {
+          "autoincrement": false,
+          "name": "surcharge",
+          "type": "decimal(10,2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "onUpdate": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {
+        "category_seats": {
+          "name": "category_seats",
+          "columns": [
+            "category",
+            "seats"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "uniqueConstraints": {}
+    },
+    "quotes": {
+      "name": "quotes",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "numero": {
+          "autoincrement": false,
+          "name": "numero",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "customer_data": {
+          "autoincrement": false,
+          "name": "customer_data",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "vehicle_data": {
+          "autoincrement": false,
+          "name": "vehicle_data",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "coverage_data": {
+          "autoincrement": false,
+          "name": "coverage_data",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "premium_details": {
+          "autoincrement": false,
+          "name": "premium_details",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "valid_until": {
+          "autoincrement": false,
+          "name": "valid_until",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "default": "'pending'",
+          "autoincrement": false,
+          "name": "status",
+          "type": "enum('pending','accepted','expired')",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "onUpdate": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {
+        "status_valid_until": {
+          "name": "status_valid_until",
+          "columns": [
+            "status",
+            "valid_until"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "UK_QUOTE_NUM": {
+          "name": "UK_QUOTE_NUM",
+          "columns": [
+            "numero"
+          ]
+        }
+      }
+    },
+    "ref_categories": {
+      "name": "ref_categories",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "code": {
+          "autoincrement": false,
+          "name": "code",
+          "type": "varchar(10)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "autoincrement": false,
+          "name": "name",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "autoincrement": false,
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "min_power": {
+          "default": 0,
+          "autoincrement": false,
+          "name": "min_power",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "max_power": {
+          "default": 999,
+          "autoincrement": false,
+          "name": "max_power",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "parent_id": {
+          "autoincrement": false,
+          "name": "parent_id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_active": {
+          "default": 1,
+          "autoincrement": false,
+          "name": "is_active",
+          "type": "tinyint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "onUpdate": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {
+        "parent_id": {
+          "name": "parent_id",
+          "columns": [
+            "parent_id"
+          ],
+          "isUnique": false
+        },
+        "idx_code": {
+          "name": "idx_code",
+          "columns": [
+            "code"
+          ],
+          "isUnique": false
+        },
+        "idx_active": {
+          "name": "idx_active",
+          "columns": [
+            "is_active"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "ref_categories_ibfk_1": {
+          "name": "ref_categories_ibfk_1",
+          "tableFrom": "ref_categories",
+          "tableTo": "ref_categories",
+          "columnsFrom": [
+            "parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "restrict"
+        }
+      },
+      "uniqueConstraints": {
+        "code": {
+          "name": "code",
+          "columns": [
+            "code"
+          ]
+        }
+      }
+    },
+    "ref_category_old": {
+      "name": "ref_category_old",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "int(11) unsigned",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "code": {
+          "autoincrement": false,
+          "name": "code",
+          "type": "varchar(10)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "nom": {
+          "autoincrement": false,
+          "name": "nom",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "autoincrement": false,
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "code_tarif": {
+          "autoincrement": false,
+          "name": "code_tarif",
+          "type": "varchar(10)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "vehicule_type": {
+          "default": "'tourism'",
+          "autoincrement": false,
+          "name": "vehicule_type",
+          "type": "enum('tourism','commercial','transport_marchandise','transport_personne','deux_roues','engin_chantier','agricole','remorque','special')",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "min_weight": {
+          "autoincrement": false,
+          "name": "min_weight",
+          "type": "decimal(10,2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "max_weight": {
+          "autoincrement": false,
+          "name": "max_weight",
+          "type": "decimal(10,2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "min_place": {
+          "autoincrement": false,
+          "name": "min_place",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "max_place": {
+          "autoincrement": false,
+          "name": "max_place",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_active": {
+          "default": 1,
+          "autoincrement": false,
+          "name": "is_active",
+          "type": "tinyint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "onUpdate": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {
+        "vehicule_type": {
+          "name": "vehicule_type",
+          "columns": [
+            "vehicule_type"
+          ],
+          "isUnique": false
+        },
+        "code_tarif": {
+          "name": "code_tarif",
+          "columns": [
+            "code_tarif"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "code": {
+          "name": "code",
+          "columns": [
+            "code"
+          ]
+        }
+      }
+    },
+    "ref_circulation_zones": {
+      "name": "ref_circulation_zones",
+      "columns": {
+        "code": {
+          "autoincrement": false,
+          "name": "code",
+          "type": "varchar(10)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "autoincrement": false,
+          "name": "description",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "coverage": {
+          "autoincrement": false,
+          "name": "coverage",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "isActive": {
+          "default": 1,
+          "autoincrement": false,
+          "name": "isActive",
+          "type": "tinyint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "createdAt",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updatedAt": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "updatedAt",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {}
+    },
+    "ref_coverage": {
+      "name": "ref_coverage",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "bigint(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "coverage_code": {
+          "autoincrement": false,
+          "name": "coverage_code",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "coverage_name": {
+          "autoincrement": false,
+          "name": "coverage_name",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "autoincrement": false,
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "options": {
+          "autoincrement": false,
+          "name": "options",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "rules": {
+          "autoincrement": false,
+          "name": "rules",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_active": {
+          "default": 1,
+          "autoincrement": false,
+          "name": "is_active",
+          "type": "tinyint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "onUpdate": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {
+        "idx_coverage_code": {
+          "name": "idx_coverage_code",
+          "columns": [
+            "coverage_code"
+          ],
+          "isUnique": false
+        },
+        "idx_active": {
+          "name": "idx_active",
+          "columns": [
+            "is_active"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "coverage_code": {
+          "name": "coverage_code",
+          "columns": [
+            "coverage_code"
+          ]
+        }
+      }
+    },
+    "ref_fuel_types": {
+      "name": "ref_fuel_types",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "code": {
+          "autoincrement": false,
+          "name": "code",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "autoincrement": false,
+          "name": "name",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "autoincrement": false,
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "category": {
+          "autoincrement": false,
+          "name": "category",
+          "type": "enum('fossil','electric','hybrid','alternative')",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "power_conversion_factor": {
+          "default": "'1.0000'",
+          "autoincrement": false,
+          "name": "power_conversion_factor",
+          "type": "decimal(10,4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "risk_factor": {
+          "default": "'1.0000'",
+          "autoincrement": false,
+          "name": "risk_factor",
+          "type": "decimal(10,4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "eco_bonus": {
+          "default": "'0.0000'",
+          "autoincrement": false,
+          "name": "eco_bonus",
+          "type": "decimal(10,4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sorting_order": {
+          "default": 0,
+          "autoincrement": false,
+          "name": "sorting_order",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_active": {
+          "default": 1,
+          "autoincrement": false,
+          "name": "is_active",
+          "type": "tinyint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "onUpdate": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {
+        "idx_code": {
+          "name": "idx_code",
+          "columns": [
+            "code"
+          ],
+          "isUnique": false
+        },
+        "idx_category": {
+          "name": "idx_category",
+          "columns": [
+            "category"
+          ],
+          "isUnique": false
+        },
+        "idx_active": {
+          "name": "idx_active",
+          "columns": [
+            "is_active"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "code": {
+          "name": "code",
+          "columns": [
+            "code"
+          ]
+        }
+      }
+    },
+    "ref_vehicle_body_types": {
+      "name": "ref_vehicle_body_types",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "bigint(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "code": {
+          "autoincrement": false,
+          "name": "code",
+          "type": "varchar(10)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "autoincrement": false,
+          "name": "name",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name_fr": {
+          "autoincrement": false,
+          "name": "name_fr",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "category": {
+          "autoincrement": false,
+          "name": "category",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "autoincrement": false,
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "seats_min": {
+          "default": 1,
+          "autoincrement": false,
+          "name": "seats_min",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "seats_max": {
+          "autoincrement": false,
+          "name": "seats_max",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "weight_class": {
+          "autoincrement": false,
+          "name": "weight_class",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "usage_type": {
+          "autoincrement": false,
+          "name": "usage_type",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "international_code": {
+          "autoincrement": false,
+          "name": "international_code",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sort_order": {
+          "default": 0,
+          "autoincrement": false,
+          "name": "sort_order",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_active": {
+          "default": 1,
+          "autoincrement": false,
+          "name": "is_active",
+          "type": "tinyint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "onUpdate": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {
+        "idx_code": {
+          "name": "idx_code",
+          "columns": [
+            "code"
+          ],
+          "isUnique": false
+        },
+        "idx_category": {
+          "name": "idx_category",
+          "columns": [
+            "category"
+          ],
+          "isUnique": false
+        },
+        "idx_active_sort": {
+          "name": "idx_active_sort",
+          "columns": [
+            "is_active",
+            "sort_order"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "code": {
+          "name": "code",
+          "columns": [
+            "code"
+          ]
+        }
+      }
+    },
+    "ref_vehicle_brands": {
+      "name": "ref_vehicle_brands",
+      "columns": {
+        "code": {
+          "autoincrement": false,
+          "name": "code",
+          "type": "varchar(10)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "autoincrement": false,
+          "name": "name",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "isActive": {
+          "default": 1,
+          "autoincrement": false,
+          "name": "isActive",
+          "type": "tinyint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "createdAt",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updatedAt": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "updatedAt",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {}
+    },
+    "ref_vehicle_categories": {
+      "name": "ref_vehicle_categories",
+      "columns": {
+        "id": {
+          "autoincrement": false,
+          "name": "id",
+          "type": "smallint(6)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "code": {
+          "autoincrement": false,
+          "name": "code",
+          "type": "varchar(10)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "autoincrement": false,
+          "name": "name",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "autoincrement": false,
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "parent_id": {
+          "autoincrement": false,
+          "name": "parent_id",
+          "type": "smallint(6)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_active": {
+          "default": 1,
+          "autoincrement": false,
+          "name": "is_active",
+          "type": "tinyint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "code": {
+          "name": "code",
+          "columns": [
+            "code"
+          ]
+        }
+      }
+    },
+    "ref_vehicle_manufacturers": {
+      "name": "ref_vehicle_manufacturers",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "bigint(20) unsigned",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "code": {
+          "autoincrement": false,
+          "name": "code",
+          "type": "varchar(10)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "autoincrement": false,
+          "name": "name",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "display_name": {
+          "autoincrement": false,
+          "name": "display_name",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "short_name": {
+          "autoincrement": false,
+          "name": "short_name",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "country_code": {
+          "autoincrement": false,
+          "name": "country_code",
+          "type": "char(2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "website": {
+          "autoincrement": false,
+          "name": "website",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "logo_url": {
+          "autoincrement": false,
+          "name": "logo_url",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "description": {
+          "autoincrement": false,
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status": {
+          "default": "'active'",
+          "autoincrement": false,
+          "name": "status",
+          "type": "enum('active','inactive','pending')",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "is_verified": {
+          "default": 0,
+          "autoincrement": false,
+          "name": "is_verified",
+          "type": "tinyint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "is_locked": {
+          "default": 0,
+          "autoincrement": false,
+          "name": "is_locked",
+          "type": "tinyint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "onUpdate": true
+        },
+        "created_by": {
+          "autoincrement": false,
+          "name": "created_by",
+          "type": "bigint(20) unsigned",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_by": {
+          "autoincrement": false,
+          "name": "updated_by",
+          "type": "bigint(20) unsigned",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {
+        "idx_manufacturer_status": {
+          "name": "idx_manufacturer_status",
+          "columns": [
+            "status"
+          ],
+          "isUnique": false
+        },
+        "idx_manufacturer_country": {
+          "name": "idx_manufacturer_country",
+          "columns": [
+            "country_code"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "uk_manufacturer_code": {
+          "name": "uk_manufacturer_code",
+          "columns": [
+            "code"
+          ]
+        },
+        "uk_manufacturer_name": {
+          "name": "uk_manufacturer_name",
+          "columns": [
+            "name"
+          ]
+        }
+      }
+    },
+    "ref_vehicle_models": {
+      "name": "ref_vehicle_models",
+      "columns": {
+        "code": {
+          "autoincrement": false,
+          "name": "code",
+          "type": "varchar(10)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "brandCode": {
+          "autoincrement": false,
+          "name": "brandCode",
+          "type": "varchar(10)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "autoincrement": false,
+          "name": "name",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "isActive": {
+          "default": 1,
+          "autoincrement": false,
+          "name": "isActive",
+          "type": "tinyint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "createdAt",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updatedAt": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "updatedAt",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {
+        "idx_brand": {
+          "name": "idx_brand",
+          "columns": [
+            "brandCode"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "ref_vehicle_models_ibfk_1": {
+          "name": "ref_vehicle_models_ibfk_1",
+          "tableFrom": "ref_vehicle_models",
+          "tableTo": "ref_vehicle_brands",
+          "columnsFrom": [
+            "brandCode"
+          ],
+          "columnsTo": [
+            "code"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "restrict"
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "users": {
+      "name": "users",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "int(10)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "username": {
+          "autoincrement": false,
+          "name": "username",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "password": {
+          "autoincrement": false,
+          "name": "password",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "autoincrement": false,
+          "name": "email",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "role": {
+          "default": "'USER'",
+          "autoincrement": false,
+          "name": "role",
+          "type": "enum('ADMIN','USER','API')",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "isActive": {
+          "default": 1,
+          "autoincrement": false,
+          "name": "isActive",
+          "type": "tinyint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lastLogin": {
+          "autoincrement": false,
+          "name": "lastLogin",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "createdAt": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "createdAt",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updatedAt": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "updatedAt",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "deletedAt": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "deletedAt",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {
+        "idx_username": {
+          "name": "idx_username",
+          "columns": [
+            "username"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "uniqueConstraints": {
+        "username": {
+          "name": "username",
+          "columns": [
+            "username"
+          ]
+        },
+        "email": {
+          "name": "email",
+          "columns": [
+            "email"
+          ]
+        }
+      }
+    },
+    "user_tokens": {
+      "name": "user_tokens",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "int(10)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "userId": {
+          "autoincrement": false,
+          "name": "userId",
+          "type": "int(10)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "token": {
+          "autoincrement": false,
+          "name": "token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "expiresAt": {
+          "autoincrement": false,
+          "name": "expiresAt",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "lastUsedAt": {
+          "autoincrement": false,
+          "name": "lastUsedAt",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "createdAt": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "createdAt",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updatedAt": {
+          "default": "'CURRENT_TIMESTAMP'",
+          "autoincrement": false,
+          "name": "updatedAt",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {
+        "idx_user_tokens_user": {
+          "name": "idx_user_tokens_user",
+          "columns": [
+            "userId"
+          ],
+          "isUnique": false
+        },
+        "idx_user_tokens_expiry": {
+          "name": "idx_user_tokens_expiry",
+          "columns": [
+            "expiresAt"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "fk_user_tokens_user": {
+          "name": "fk_user_tokens_user",
+          "tableFrom": "user_tokens",
+          "tableTo": "users",
+          "columnsFrom": [
+            "userId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        }
+      },
+      "uniqueConstraints": {}
+    }
+  },
+  "schemas": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  }
+}
